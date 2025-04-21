@@ -1,5 +1,5 @@
 #!/bin/sh
-DB="/data/bidrag.db"
+DB="/var/www/bidrag/bidrag.db"
 echo "Content-Type:text/plain;charset=utf-8"
 echo
 

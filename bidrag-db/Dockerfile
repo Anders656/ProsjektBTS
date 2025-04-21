@@ -4,9 +4,10 @@ RUN apk add --no-cache busybox-extras libxml2-utils sqlite mkpasswd
 COPY index.cgi /var/www/cgi-bin/
 
 CMD /bin/sh -c '\
+  mkdir -p /var/www/bidrag && \
+  chmod -R a+w /var/www/bidrag && \
   if [ ! -f /var/www/bidrag/bidrag.db ]; then \
     echo "Oppretter tom bidrag.db..."; \
-    mkdir -p /var/www/bidrag && \
     sqlite3 /var/www/bidrag/bidrag.db "CREATE TABLE bidrag ( \
       id INTEGER PRIMARY KEY AUTOINCREMENT, \
       pseudonym TEXT NOT NULL, \
