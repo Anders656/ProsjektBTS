@@ -1,5 +1,4 @@
 #!/bin/sh
-#hei
 DB="/data/bidrag.db"
 echo "Content-Type:text/plain;charset=utf-8"
 echo
