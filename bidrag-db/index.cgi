@@ -4,22 +4,6 @@ DB="/data/bidrag.db"
 echo "Content-Type:text/plain;charset=utf-8"
 echo
 
-# 🚀 **Sjekk om databasen finnes – opprett hvis den mangler**
-if [ ! -f "$DB" ]; then
-    echo "[AUTO] Oppretter manglende database..." >&2
-    mkdir -p /data
-    sqlite3 "$DB" "CREATE TABLE IF NOT EXISTS bidrag (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        pseudonym TEXT NOT NULL,
-        tittel TEXT NOT NULL,
-        tekst TEXT NOT NULL,
-        kommentar TEXT,
-        epost_hash TEXT NOT NULL,
-        passordhash TEXT NOT NULL,
-        salt TEXT NOT NULL
-    );"
-fi
-
 CONTENT_LENGTH=$HTTP_CONTENT_LENGTH$CONTENT_LENGTH
 KR=$(head -c "$CONTENT_LENGTH")
 
