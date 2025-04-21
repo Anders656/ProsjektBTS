@@ -1,12 +1,13 @@
 FROM alpine
-RUN apk add busybox-extras libxml2-utils sqlite mkpasswd
+RUN apk add --no-cache busybox-extras libxml2-utils sqlite mkpasswd
 
 COPY index.cgi /var/www/cgi-bin/
 
 CMD /bin/sh -c '\
-  if [ ! -f /data/bidrag.db ]; then \
+  if [ ! -f /var/www/bidrag/bidrag.db ]; then \
     echo "Oppretter tom bidrag.db..."; \
-    sqlite3 /data/bidrag.db "CREATE TABLE bidrag ( \
+    mkdir -p /var/www/bidrag && \
+    sqlite3 /var/www/bidrag/bidrag.db "CREATE TABLE bidrag ( \
       id INTEGER PRIMARY KEY AUTOINCREMENT, \
       pseudonym TEXT NOT NULL, \
       tittel TEXT NOT NULL, \
