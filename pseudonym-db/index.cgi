@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DB="/data/pseudonym.db"
+DB="/var/www/pseudonym/pseudonym.db"
 
 echo 'Access-Control-Allow-Origin: http://localhost:8080'
 echo 'Access-Control-Allow-Credentials: true'
