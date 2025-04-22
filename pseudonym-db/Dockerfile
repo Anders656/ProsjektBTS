@@ -19,9 +19,9 @@ CMD /bin/sh -c "\
       passordhash TEXT NOT NULL \
     );\"; \
     sqlite3 /var/www/pseudonym/pseudonym.db \"INSERT INTO pseudonym (epost, pseudonym, salt, passordhash) VALUES \
-      (\\'Ante@example.com\\', \\'osiedahs\\', \\'1712167670\\', \\'Aw16YyLRWTS0BOoOb7DpvBMeYb444g.kl1a542GYpJA\\'), \
-      (\\'Bjart@example.com\\', \\'uozaixav\\', \\'1712167671\\', \\'q37QpOdM2jSDeXOVAyiCSzMgy08dI7pLQ1aBElJps48\\'), \
-      (\\'Cecilie@example.com\\', \\'olaebaev\\', \\'1712167672\\', \\'D0z6dLRTSw.u7tct9zQVBUOCBhPEiFn2Eb./li.oyUA\\');\"; \
+      ('Ante@example.com', 'osiedahs', '1712167670', 'Aw16YyLRWTS0BOoOb7DpvBMeYb444g.kl1a542GYpJA'), \
+      ('Bjart@example.com', 'uozaixav', '1712167671', 'q37QpOdM2jSDeXOVAyiCSzMgy08dI7pLQ1aBElJps48'), \
+      ('Cecilie@example.com', 'olaebaev', '1712167672', 'D0z6dLRTSw.u7tct9zQVBUOCBhPEiFn2Eb./li.oyUA');\"; \
   else \
     echo 'Databasen eksisterer – hopper over init.'; \
   fi && \
