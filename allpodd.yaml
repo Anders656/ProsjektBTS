@@ -1,10 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: allpodd
   labels:
     app: allpodd
-  name: allpodd
+    app.kubernetes.io/name: allpodd
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: ProsjektBTS
+    app.kubernetes.io/managed-by: kubectl
+  annotations:
+    security.usn.no/bidrag_tekst: "OFFENTLIG_INNHOLD – Anonym visning. Ikke koblet til identitet."
+    security.usn.no/pseudonym: "KUN_ADMINISTRATOR – Pseudonym synlig kun for administrator."
 spec:
+  type: NodePort
+  selector:
+    app: allpodd
   ports:
     - name: "80"
       nodePort: 31793
@@ -14,16 +24,23 @@ spec:
       nodePort: 32753
       port: 81
       targetPort: 81
-  selector:
-    app: allpodd
-  type: NodePort
 ---
 apiVersion: v1
 kind: Pod
 metadata:
+  name: allpodd
   labels:
     app: allpodd
-  name: allpodd
+    app.kubernetes.io/name: allpodd
+    app.kubernetes.io/instance: allpodd-prod
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: ProsjektBTS
+    app.kubernetes.io/managed-by: kubectl
+  annotations:
+    security.usn.no/kommentar: "PRIVAT_INNHOLD – Kun synlig for autentisert bruker. Ikke koblet til pseudonym i frontend."
+    security.usn.no/pseudonym: "KUN_ADMINISTRATOR – Ikke tilgjengelig i API eller frontend. Kun for admin."
+    security.usn.no/bidrag_tekst: "OFFENTLIG_INNHOLD – Visning uten kobling til identitet. Pseudonym vises kun for administratorer."
+    infra.usn.no/secrets: "DRIFT_KRITISK_SENSITIV – Secrets håndteres via Kubernetes og er RBAC-beskyttet."
 spec:
   containers:
     - name: app
@@ -78,3 +95,4 @@ spec:
     - name: "pseudonym-data"
       persistentVolumeClaim:
         claimName: pseudonym-pvc
+

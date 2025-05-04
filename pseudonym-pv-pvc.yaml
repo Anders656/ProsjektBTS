@@ -2,6 +2,14 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: pseudonym-pv
+  labels:
+    app.kubernetes.io/name: pseudonym-db
+    app.kubernetes.io/component: storage
+    app.kubernetes.io/part-of: ProsjektBTS
+  annotations:
+    infra.usn.no/volum: "INFRA_LAGRING_SENSITIV - Lagring for pseudonymdatabase. Kryptert og kun tilgjengelig via RBAC."
+    security.usn.no/pseudonym: "KUN_ADMINISTRATOR - Innhold kun tilgjengelig for autoriserte administratorer. Ikke eksponert til API eller frontend."
+    security.usn.no/systemdata: "SYSTEM_DATA_SENSITIV - Data behandles med tilgangsbegrensning og slettes etter oppbevaringsperiode."
 spec:
   capacity:
     storage: 1Gi
@@ -14,6 +22,12 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pseudonym-pvc
+  labels:
+    app.kubernetes.io/name: pseudonym-db
+    app.kubernetes.io/component: storage
+    app.kubernetes.io/part-of: ProsjektBTS
+  annotations:
+    infra.usn.no/volum: "INFRA_LAGRING_SENSITIV - PVC for pseudonymdatabase. Kun brukt av pseudonym-db-backend."
 spec:
   accessModes:
     - ReadWriteOnce
