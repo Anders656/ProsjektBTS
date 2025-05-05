@@ -4,11 +4,14 @@ metadata:
   creationTimestamp: "2025-04-29T17:12:04Z"
   labels:
     app: allpodd
-  annotations:
-    description: "Service for allpodd"
-    environment: "utvikling"
-    owner: "gruppe 8"
-  name: allpodd
+    app.kubernetes.io/name: allpodd
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: ProsjektBTS
+    app.kubernetes.io/managed-by: kubectl
+    annotations:
+      security.usn.no/bidrag_tekst: "OFFENTLIG_INNHOLD – Anonym visning. Ikke koblet til identitet."
+      security.usn.no/pseudonym: "KUN_ADMINISTRATOR – Pseudonym synlig kun for administrator."    
+name: allpodd
 spec:
   ports:
   - name: "80"
@@ -28,12 +31,18 @@ kind: Pod
 metadata:
   creationTimestamp: "2025-04-29T17:12:04Z"
   labels:
-    app: allpodd 
-  annotations:
-    description: "Pod inneholder alle komponentene for allpodd"
-    environment: "utvikling"
-    owner: "gruppe 8"
-  name: allpodd
+    app: allpodd
+    app.kubernetes.io/name: allpodd
+    app.kubernetes.io/instance: allpodd-prod
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: ProsjektBTS
+    app.kubernetes.io/managed-by: kubectl
+    annotations:
+     security.usn.no/kommentar: "PRIVAT_INNHOLD – Kun synlig for autentisert bruker. Ikke koblet til pseudonym i frontend."
+     security.usn.no/pseudonym: "KUN_ADMINISTRATOR – Ikke tilgjengelig i API eller frontend. Kun for admin."
+     security.usn.no/bidrag_tekst: "OFFENTLIG_INNHOLD – Visning uten kobling til identitet. Pseudonym vises kun for administratorer."
+     infra.usn.no/secrets: "DRIFT_KRITISK_SENSITIV – Secrets håndteres via Kubernetes og er RBAC-beskyttet."
+name: allpodd
 spec:
   containers:
   - env:
