@@ -47,19 +47,34 @@ podman run -dit --pod=allpodd --restart=always --name pseudonym-db localhost/pse
 podman run -dit --pod=allpodd --restart=always --name web          localhost/web
 
 
-# Sletter gammel kuberntes-fil -- om den finnes
-rm -f ./allpodd.yaml
+# Check if allpodd.yaml already exists
+if [ -f ./allpodd.yaml ]; then
+  echo "File 'allpodd.yaml' already exists. Skipping generation."
+else
+  echo "Generating 'allpodd.yaml'..."
+  podman generate kube allpodd --service -f ./allpodd.yaml
 
-# Lager kubernetes-fil
-podman generate kube allpodd --service -f ./allpodd.yaml
-
-# imagePullPolicy: Never
-# Ref: https://stackoverflow.com/questions/37302776/what-is-the-meaning-of-imagepullbackoff-status-on-a-kubernetes-pod
-sed -i "/image:/a \    imagePullPolicy: Never" allpodd.yaml
+  # Add imagePullPolicy: Never to the generated YAML
+  sed -i "/image:/a \    imagePullPolicy: Never" allpodd.yaml
+fi
 
 # Rydder opp (ved å drepe og fjerne podden)
 podman pod kill allpodd
 podman pod rm   allpodd
+
+########################
+# Legger til PersistentVolume og PersistentVolumeClaim #
+########################
+
+echo "Applying PersistentVolume and PersistentVolumeClaim for bidrag-db..."
+microk8s kubectl apply -f /home/kasper/ProsjektBTS/bidrag-pv-pvc.yaml
+
+echo "Applying PersistentVolume and PersistentVolumeClaim for pseudonym-db..."
+microk8s kubectl apply -f /home/kasper/ProsjektBTS/pseudonym-pv-pvc.yaml
+
+echo "Checking PersistentVolume and PersistentVolumeClaim status..."
+microk8s kubectl get pv
+microk8s kubectl get pvc
 
 
 ########################

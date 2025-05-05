@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/home/brukernavn/v24-25.1/ProsjektBTS/db"
+    path: "/home/kasper/ProsjektBTS/db"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

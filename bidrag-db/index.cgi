@@ -19,7 +19,7 @@ AP=$(echo "$KR" | xmllint --xpath "string(/bidrag/adminpassord)" - 2>/dev/null)
 
 ADMIN_PASS="hemmelig_admin_passord"
 
-# 🚀 **Beregner epost_hash likt i alle operasjoner**
+# *Beregner epost_hash likt i alle operasjoner**
 if [ "$E" != "" ]; then
     EPOST_HASH=$(echo -n "$E" | sha256sum | awk '{print $1}')
 else
@@ -37,14 +37,12 @@ if [ "$REQUEST_METHOD" = "GET" ]; then
 
     echo "[DEBUG] Henter bidrag for epost_hash='$EPOST_HASH'" >&2
 
-    if [ "$E" = "admin@admin.no" ]; then
-        echo "[DEBUG] Admin-visning – viser alle bidrag" >&2
-        sqlite3 -line $DB "SELECT pseudonym, tittel, tekst, kommentar FROM bidrag;"
-    elif [ "$E" != "" ]; then
-        echo "[DEBUG] Bruker-visning – viser kommentar også" >&2
+
+    if [ "$E" != "" ]; then
+        echo "[DEBUG] Bruker-visning - viser kommentar også" >&2
         sqlite3 -line $DB "SELECT tittel, tekst, kommentar FROM bidrag WHERE epost_hash='$EPOST_HASH';"
     else
-        echo "[DEBUG] Anonym-visning – kun tittel og tekst" >&2
+        echo "[DEBUG] Anonym-visning - kun tittel og tekst" >&2
         sqlite3 -line $DB "SELECT tittel, tekst FROM bidrag;"
     fi
     exit

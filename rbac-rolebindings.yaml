@@ -1,0 +1,27 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: default
+  name: admin-binding
+subjects:
+- kind: User
+  name: admin-user  # Replace with the admin's username
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: bidrag-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: default
+  name: user-binding
+subjects:
+- kind: User
+  name: regular-user  # Replace with the user's username
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: bidrag-user
+  apiGroup: rbac.authorization.k8s.io
