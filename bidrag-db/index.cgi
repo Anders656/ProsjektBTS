@@ -64,8 +64,8 @@ if [ "$REQUEST_METHOD" = "POST" ]; then
     if [ "$N" != "" ] && [ "$P" != "" ] && [ "$T" != "" ]; then
         S=$(for I in $(seq 11); do echo -n $(($RANDOM % 9)); done)
         H=$(mkpasswd -m sha-256 -S $S $P | cut -f4 -d$)
-        sqlite3 $DB "INSERT INTO bidrag (pseudonym, salt, passordhash, kommentar, tittel, tekst, epost_hash) \
-            VALUES ('$N', '$S', '$H', '$K', '$T', '$X', '$EPOST_HASH')"
+        sqlite3 $DB "INSERT INTO bidrag (pseudonym, salt, passordhash, kommentar, tittel, tekst, epost_hash,timestamp) \
+            VALUES ('$N', '$S', '$H', '$K', '$T', '$X', '$EPOST_HASH', CURRENT_TIMESTAMP);"
         echo "[SUCCESS] Bidrag lagret for bruker '$N'."
     else
         echo "[ERROR] Ugyldig POST-data" >&2
@@ -85,7 +85,7 @@ if [ "$REQUEST_METHOD" = "PUT" ]; then
 
     if [ "$H1" != "$H2" ]; then echo "[ERROR] Feil passord for bruker '$E'" >&2; exit; fi
 
-    sqlite3 $DB "UPDATE bidrag SET kommentar='$K', tittel='$T', tekst='$X' WHERE epost_hash='$EPOST_HASH'"
+    sqlite3 $DB "UPDATE bidrag SET kommentar='$K', tittel='$T', tekst='$X', timestamp=CURRENT_TIMESTAMP WHERE epost_hash='$EPOST_HASH'"
     echo "[SUCCESS] Bidrag oppdatert for bruker '$E'."
     exit
 fi

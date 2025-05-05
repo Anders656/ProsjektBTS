@@ -17,6 +17,7 @@ CMD /bin/sh -c '\
       epost_hash TEXT NOT NULL, \
       passordhash TEXT NOT NULL, \
       salt TEXT NOT NULL \
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP \
     );"; \
   else \
     echo "Databasen eksisterer – hopper over init."; \
