@@ -18,6 +18,7 @@ CMD /bin/sh -c '\
       passordhash TEXT NOT NULL, \
       salt TEXT NOT NULL \
       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP \
+      merkelapp TEXT NOT NULL, \
     );"; \
   else \
     echo "Databasen eksisterer – hopper over init."; \
